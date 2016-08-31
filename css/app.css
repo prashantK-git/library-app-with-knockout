@@ -1,0 +1,27 @@
+.app {
+	
+}
+
+.hidden {
+	
+}
+
+.space {
+	margin-top: 1em;
+}
+
+.horizontal {
+	display: inline-block;
+}
+.tab {
+	margin-right: 1em;
+	margin-left: 1em;
+}
+
+.top-pad {
+	padding-top: 4em;
+}
+
+.selected {
+	color: blue;
+}

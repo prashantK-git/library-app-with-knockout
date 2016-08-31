@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Library Login</title> 
+	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+	<link href="css/login.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="wrapper" id="login-window">
+    <div class="form-signin">       
+      <h2 class="form-signin-heading">Library Application login</h2>
+      <input class="margin" type="text"  id="username" placeholder="User Name"  autofocus="" 
+      data-bind="value: username,valueUpdate: 'afterkeydown'" /><br>
+      <input class="margin" type="password" id="password" placeholder="Password" 
+      data-bind="value: password,valueUpdate: 'afterkeydown'"/> <br>     
+      <label class="checkbox">
+        <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
+      </label>
+      <button class="btn btn-lg btn-primary" type="submit" data-bind="enable: enableLogin, click: doLogin">Login</button> 
+      <div class="highlight" data-bind="text:update"> </div> 
+    </div>
+  </div>
+
+  <script type="text/javascript" data-main="loginapp.js" src="lib/require.js" ></script>
+
+</body>
+</html>

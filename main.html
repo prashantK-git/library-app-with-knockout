@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<head>
+  <title>Library Application</title> 
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+  <meta name="description" content="">  
+
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/sidebar.css" rel="stylesheet">
+  <link href="css/carousel.css" rel="stylesheet">
+  <link href="css/app.css" rel="stylesheet">
+
+</head>
+
+<body>
+   <!-- This is called "view" of HTML markup that defines the appearance of UI -->
+  <div id="wrapper">
+    <div class="container-fluid">
+
+
+      <!-- Sidebar -->
+      <div class="hidden" id="side-bar">      
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav" data-bind = "foreach: leftPanelModel">
+              <li>
+                  <a href="#" data-bind ="text: $data, click: navigateTo"></a>
+              </li>              
+            </ul>
+        </div>
+      </div>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- About us segment -->
+      <div class="app hidden" id="about-us">
+        <div class="col-lg-12">
+          <h1>About Us</h1>
+            <p>This is demo appllication of online libraray application using knockout.js.</p>
+            <h2> Intructions to use application</h2>
+            <p>Run the a local server (http and PHP) to serve the main.html and perform data transfer. </p>
+        </div>
+      </div>
+      <!-- end of about us segment -->
+
+      <!-- browse Content -->
+      <div class="app hidden" id="book-shelf">
+      
+        <div class="row">
+          <div class="col-lg-12">
+                <h1>Browse Window</h1>
+                  <p>One can browse the books here and issue(add to chcekout window) one book at a time</p>                  
+          </div>              
+        </div>     
+     
+
+      <!-- browse segment -->
+        <div id = "browseSegment" data-bind = "foreach : {data: carouselArray , as:'categoryitem'}">
+          <div class = "col-lg-10">
+            <div class="carousel slide" data-interval= "false" data-bind="attr:{id: category}">         
+                <div class ="well">                          
+                          <!-- Carousel items -->
+                        <div><h3 data-bind="text: category"></h3></div>
+                        <div class="carousel-inner" data-bind = "foreach : {data: dataArray , as:'item'}">
+                          <div class="item" data-bind="css : computeActive($index)">
+                            <div class="row">
+                            <div  data-bind = "foreach:{data:item, as:'model'}" >
+                              <div class="boxArtList">
+                                <boxart-control params="items: model"> </boxart-control>
+                              </div>
+                             </div>
+                            </div><!--/row-->
+                          </div><!--/item-->                         
+                          
+                           
+                          <a class="left carousel-control" data-slide="prev" data-bind="attr:{href: categoryitem.hrefId}">‹</a>
+                          <a class="right carousel-control" href="#myCarousel" data-slide="next" data-bind="attr:{href: categoryitem.hrefId}">›</a>
+
+                        </div><!--/Carousel inner-->
+                          
+                </div><!--/well-->   
+            </div>  <!--/end of carousel-->           
+          </div>
+        </div>
+          <!-- end of browse segment -->
+      </div>
+       <!-- /end of browseContent -->
+      
+      <!-- checkout segment -->
+      <div class="app hidden" id="checkout">
+        <h1>Checkout window</h1>
+        <p>User can ceckout the books from here.</p>
+        <div class="col-lg-12">
+          <div class="well" data-bind = "foreach: {data:checkoutBooksArray, as:'book'}">            
+            <book-media-control params="items: book"></book-media-control>
+          </div>
+          <button type="button" class="btn btn-primary" data-bind="click: checkoutBooks, enable: enableAllCheckout">Checkout All Books</button>          
+        </div>
+      </div>
+      <!-- end of checkout sengment -->
+
+      <!-- add new book segment -->
+      <div class="app hidden" id="add-new-books">
+      <h1>Add new Books window</h1>
+      <p> user can upload image from local path here.</p>
+        <div class="col-lg-12">
+          <div class="top-pad">
+            <div class="well " id= "add-book-panel">
+                <div class="horizontal">
+                    <p class="tab">Category:</p> 
+                    <select data-bind='options: newBookArray, 
+                    optionsCaption: "Category...", value: bookCategory'> </select>
+                </div>
+                <div class="horizontal">
+                    <p class="tab">Copies</p> 
+                    <input data-bind='value: copies, valueUpdate: "afterkeydown"' />
+                </div>
+                <div class="horizontal">
+                    <p class="tab">Author</p> 
+                    <input data-bind='value: author, valueUpdate: "afterkeydown"' />
+                </div>
+                <div class="horizontal">
+                    <p class="tab">Book ID:</p> 
+                    <input data-bind='value: bookId, valueUpdate: "afterkeydown"' />                    
+                </div> 
+                <div class="horizontal">
+                    <p class="tab">Image Url: </p> 
+                     <form action='upload_image.php' id="imageUploadForm" method='POST' enctype='multipart/form-data'>
+                        <input type='file' name='userFile' id="imgInput" accept="image/*">                        
+                    </form>
+                </div>
+                <div class="">
+                  <button type="button" class="btn btn-primary tab" data-bind="click: addBook, enable: enableAddBook">Add Book</button>
+                </div>              
+            </div>
+            <!-- book list segment -->
+            <div class="top-pad">
+              <div class="well" data-bind = "foreach: {data:newBookListArray, as:'book'}">
+                <book-media-control params="items: book"></book-media-control>
+              </div>
+              <button type="button" class="btn btn-primary" data-bind="click: addAllBook,enable: enableAddAllBook">Add All Books</button>
+            </div> 
+            <!-- end of book list segment -->
+          
+          </div>
+        </div>
+      </div>
+      <!-- end of new book segment -->
+
+      <!-- issued book -->
+      <div class="app hidden" id="issued-books">
+      <h1>Issued window</h1>
+      <p>Books issued to you.</p>
+          <div class="well" data-bind = "foreach: {data:issuedBookListArray, as:'book'}">
+                <book-media-control params="items: book"></book-media-control>
+                <button type="button" class="btn btn-primary tab" data-bind="click: returnBook.bind($data ,$index())">Return book</button>
+          </div>
+      </div>
+    </div>
+    <!-- end of container fluid -->
+  </div>
+  <!-- /#wrapper -->
+
+   <script type="text/javascript" data-main="app1.js" src="lib/require.js" ></script>
+</body>
+
+  <!-- end of body -->
+
+</html>

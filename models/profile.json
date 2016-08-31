@@ -1,0 +1,12 @@
+{
+	"profiles": [{
+		"userId": "test",
+		"password": "111",
+		"role": "user"
+	}, {
+		"userId": "test1",
+		"password": "222",
+		"role": "admin"
+
+	}]
+}
